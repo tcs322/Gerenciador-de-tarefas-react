@@ -1,23 +1,24 @@
 import { useState } from "react";
 import AddTask from "./components/AddTask";
 import Tasks from "./components/Tasks";
+import { v4 } from "uuid";
 
 function App() {
   const [tasks, setTasks] = useState([
     {
-      id: 1,
+      id: v4(),
       title: "Estudar React",
       description: "blá blá blá",
       isCompleted: false,
     },
     {
-      id: 2,
+      id: v4(),
       title: "Estudar GraphQL",
       description: "blá blá blá",
       isCompleted: false,
     },
     {
-      id: 3,
+      id: v4(),
       title: "Projetar esqueleto do sistema de Ecommerce",
       description: "blá blá blá",
       isCompleted: false,
@@ -41,11 +42,22 @@ function App() {
     setTasks(newTasks);
   }
 
+  function addTaskSubmit(title, description) {
+    const newTask = {
+      id: v4(),
+      title: title,
+      description: description,
+      isCompleted: false,
+    };
+
+    setTasks([...tasks, newTask]);
+  }
+
   return (
     <div className="w-screen h-screen bg-gray-500 flex justify-center p-6">
-      <div className="w-[500px]">
+      <div className="w-[500px] space-y-4">
         <h1 className="text-3xl text-white">Gerenciador de tarefas</h1>
-        <AddTask />
+        <AddTask addTaskSubmit={addTaskSubmit} />
         <Tasks
           tasks={tasks}
           changeTaskIsCompleted={changeTaskIsCompleted}
